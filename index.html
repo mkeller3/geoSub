@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../../../favicon.ico">
+
+  <title>GeoSubscription Server</title>
+
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body class="text-center">
+
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">GeoSubscription Server</h3>
+      </div>
+    </header>
+
+    <main role="main" class="inner cover">
+      <section id="geoSubscriptions">
+          <h1 class="cover-heading">Your GeoSubscriptions</h1>
+          <button class="btn btn-outline-success" onclick="newGeoSubscription()">Add New</button>
+      </section>
+      <section id="geoSubscriptionSection">
+        <p class="lead">Enter the name of your GeoSubscription.</p>
+        <div class="form-group">
+          <input class="form-control form-control-sm" id="geoSubscriptionName" type="text" placeholder="Enter Name...">
+        </div>
+        <button class="btn btn-outline-success" onclick="dataType()">Continue</button>
+      </section>
+      <section id="inputConnectorSection">
+        <h1 class="cover-heading">Input Connecter</h1>
+        <p class="lead">Select where your data is coming from below.</p>
+        <div class="input-group-sm mb-3">
+          <select class="custom-select" id="inputConnector">
+            <option selected disabled>Choose...</option>
+            <option value="mapLayer">Your Map Layers</option>
+            <option value="arcgis">ArcGIS Map/Feature Service</option>
+            <option value="json">JSON/GeoJSON Web Feed</option>
+            <option value="csv">CSV Web Feed</option>
+            <option value="xlsx">XLSX Web Feed</option>
+          </select>
+        </div>
+        <button class="btn btn-outline-success" onclick="inputConnectorSelect()">Continue</button>
+      </section>
+      <section id="urlSection">
+        <p class="lead">Input the url to connect to your service.</p>
+        <div class="form-group">
+          <input class="form-control form-control-sm" id="inputUrl" type="text" placeholder="Enter URL...">
+        </div>
+        <button class="btn btn-outline-success" onclick="inputUrlSelect()">Continue</button>
+      </section>
+      <section id="nameSection">
+        <p class="lead">Input the your dataset name.</p>
+        <div class="form-group">
+          <input class="form-control form-control-sm" id="geoSubscriptionTableName" type="text" placeholder="Enter Name...">
+        </div>
+        <button class="btn btn-outline-success" onclick="inputNameSelect()">Continue</button>
+      </section>
+      <section id="inputFilters">
+        <p class="lead">Add filters to your dataset.</p>
+        <ul class="list-group" id="inputFilterList">
+          </ul><br>
+          <div class="btn-group" role="group" aria-label="Basic example">
+        <button class="btn btn-outline-info" onclick="addInputFilter()">Add Filter</button>
+        <button class="btn btn-outline-success" onclick="filterSelect()">Continue</button>
+        </div>
+      </section>
+      <section id="inputAnalysis">
+        <p class="lead">Add analyses to your dataset.</p>
+        <ul class="list-group" id="inputAnalysisList">
+          </ul><br>
+          <div class="btn-group" role="group" aria-label="Basic example">
+        <button class="btn btn-outline-info" onclick="addInputAnalysis()">Add Analysis</button>
+        <button class="btn btn-outline-success" onclick="analysisSelect()">Continue</button>
+        </div>
+      </section>
+      <section id="geoSubscriptionTiming">
+        <p class="lead">Select when you would like you GeoSubscription to run.</p>
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+        <button class="btn btn-outline-info" onclick="addInputAnalysis()">Add Analysis</button>
+        <button class="btn btn-outline-success" onclick="timingSelect()">Continue</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+
+      </div>
+    </footer>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="inputFilterModal">
+    <div class="modal-dialog  modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Filter Type</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <section id="inputFilterSelection">
+            <p>Select which type of filter you would like to apply to your input.</p>
+            <button type="button" class="btn btn-outline-warning" onclick="inputFilterField()">Field</button>
+            <button type="button" class="btn btn-outline-info" onclick="inputFilterGeographic()">Geometric</button>
+          </section>
+          <section id="inputFilterField">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <select id="inputFilterColumn" class="form-control"  onchange="inputFilterValueChange()">
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                      <select id="inputFilterComparison" class="form-control">
+                        <option value="=" selected>=</option>
+                        <option value="<"><</option>
+                        <option value="<="><=</option>
+                        <option value=">">></option>
+                        <option value=">=">>=</option>
+                      </select>
+                    </div>
+                    
+              <div class="col">
+                <input type="text" class="form-control" id="inputFilterValue" onkeyup="inputFilterValueChange()">
+              </div>
+            </div>
+            <div id="inputFilterValueAndOr">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-outline-warning">And</button>
+                    <button type="button" class="btn btn-outline-info">Or</button>
+                  </div>
+            </div>
+            <br>
+            <button type="button" class="btn btn-outline-success" onclick="inputFilterValueComplete()">Complete</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
