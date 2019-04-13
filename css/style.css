@@ -30,6 +30,11 @@ body {
 
 }
 
+#map{
+  height: 400px;
+  width: 100%;
+}
+
 body {
   display: -ms-flexbox;
   display: -webkit-box;
@@ -107,6 +112,6 @@ body {
   color: rgba(255, 255, 255, .5);
 }
 
-#urlSection, #inputFilters, #inputFilterField, #inputFilterValueAndOr, #inputConnectorSection, #geoSubscriptionSection, #inputAnalysis, #nameSection, #geoSubscriptionTiming{
+#urlSection, #inputFilters, #inputFilterField, #inputFilterValueAndOr, #inputConnectorSection, #geoSubscriptionSection, #inputAnalysis, #mapFilterField, #nameSection, #geoSubscriptionTiming{
   display: none
 }

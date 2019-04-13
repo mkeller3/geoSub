@@ -7,6 +7,13 @@ var geo_subscription_information = {
     }, 'builders': []
 };
 
+var map = L.map('map').setView([37.8, -96], 3);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18
+}).addTo(map);
+
 function inputConnectorSelect() {
     var selectedValue = $('select#inputConnector option:selected').val();
     geo_subscription_information.input_connector = selectedValue;
@@ -43,6 +50,7 @@ function inputUrlSelect() {
 
 function inputFilterField() {
     document.getElementById('inputFilterSelection').style.display = 'none';
+    document.getElementById('mapFilterField').style.display = 'none';
     document.getElementById('inputFilterField').style.display = 'block';
     if (geo_subscription_information.filters.attribute_filters.length > 0) {
         document.getElementById('inputFilterValueAndOr').style.display = 'block';
@@ -77,6 +85,14 @@ function addInputFilter() {
     document.getElementById('inputFilterSelection').style.display = 'block';
     document.getElementById('inputFilterField').style.display = 'none';
     $('#inputFilterModal').modal('show');
+    map._onResize(); 
+}
+
+function inputFilterGeographic(){
+    document.getElementById('inputFilterSelection').style.display = 'none';
+    document.getElementById('inputFilterField').style.display = 'none';
+    document.getElementById('mapFilterField').style.display = 'block';
+    map._onResize();
 }
 
 function newGeoSubscription() {
@@ -106,6 +122,10 @@ function inputNameSelect() {
 function analysisSelect() {
     document.getElementById('geoSubscriptionTiming').style.display = 'block';
     document.getElementById('inputAnalysis').style.display = 'none';
+}
+
+function addInputAnalysis(){
+    $('#inputAnalysisModal').modal('show');
 }
 
 function timingSelect() {
